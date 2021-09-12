@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int         @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  platform      String      @default("discord")
+  platformId    String      @unique()
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now())
+
+  reminders Reminders[]
+}
+
+model Manga {
+  id            Int         @id @default(autoincrement())
+  name          String      @unique()
+  otherNames    String      @default("[]")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now())
+}
+
+model Reminders {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  itemId        Int
+  itemType      String
+  message       String
+  createdAt     DateTime    @default(now())
+
+  user          User        @relation(fields: [userId], references: [id])
+}

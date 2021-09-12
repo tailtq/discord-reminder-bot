@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "@prisma/client": "^3.0.2",
+    "axios": "^0.21.4",
+    "cheerio": "^1.0.0-rc.10",
+    "discord-api-types": "^0.23.1",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "prisma": "3.0.2",
+    "sqlite3": "^5.0.2"
+  }
+}
