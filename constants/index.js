@@ -1,0 +1,3 @@
+const PLATFORMS = {
+    discord: 'discord',
+};
