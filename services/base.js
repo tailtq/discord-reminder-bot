@@ -1,10 +1,7 @@
-import Prisma from '@prisma/client';
-
-const { PrismaClient } = Prisma;
+import prismaClient from '../prisma';
 
 export default class BaseService {
     constructor(model) {
-        const prismaClient = new PrismaClient();
         this.connection = prismaClient[model];
     }
 

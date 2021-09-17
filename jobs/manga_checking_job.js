@@ -1,15 +1,16 @@
-import BaseCronJob from '../base';
-import { REMINDER_ITEMS } from '../../constants';
-import { MangaChapterService, ReminderService, UserService } from '../../services';
+import BaseCronJob from './base';
+import { MangaChapterService, ReminderService, UserService } from '../services';
 
-export default class CheckTruyenTranhTuanCronJob extends BaseCronJob {
-    CRON_JOB_PATTERN = '* * * * * *';
+export default class MangaCheckingJob extends BaseCronJob {
+    CRON_JOB_PATTERN = '* * * * *';
 
     /**
+     * @param {string} website
      * @param {DiscordConnector} platformConnector
      */
-    constructor(platformConnector) {
+    constructor(website, platformConnector) {
         super(platformConnector);
+        this.website = website;
         this.mangaChapterService = new MangaChapterService();
         this.reminderService = new ReminderService();
         this.userService = new UserService();
@@ -19,25 +20,12 @@ export default class CheckTruyenTranhTuanCronJob extends BaseCronJob {
      * @returns {Promise<void>}
      */
     async handle() {
-        const newChapters = await this.mangaChapterService.getAndAddNewChapters('truyentranhtuan');
+        const newChapters = await this.mangaChapterService.getAndAddNewChapters(this.website);
         const users = await this.userService.findMany();
 
         if (newChapters.length > 0) {
             // get chapters with manga -> show relevant message
-            const reminders = [];
-
-            newChapters.forEach((chapter) => {
-                users.forEach((user) => {
-                    return reminders.push({
-                        userId: user.id,
-                        userPlatformId: user.platformId,
-                        itemId: chapter.id,
-                        itemType: REMINDER_ITEMS.mangaChapter,
-                        platform: user.platform,
-                        chapter,
-                    });
-                });
-            });
+            const reminders = this.reminderService.formReminderData(newChapters, users);
             const requests = reminders.map(async (reminder) => {
                 const { userPlatformId, chapter, ...reminderData } = reminder;
                 const message = `Chapter ${chapter.chapterNumber} has been released. Check it out.`;

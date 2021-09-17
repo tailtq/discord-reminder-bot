@@ -1,7 +1,7 @@
 import ParserTruyenTranhTuan from './parser_truyentranhtuan.js';
-import ParserHocVienTruyenTranh from './parser_hocvientruyentranh.js';
+import ParserMangaFreak from './parser_mangafreak.js';
 
 export {
     ParserTruyenTranhTuan,
-    ParserHocVienTruyenTranh,
+    ParserMangaFreak,
 };

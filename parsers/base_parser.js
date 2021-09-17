@@ -1,13 +1,11 @@
 import axios from 'axios';
-import Prisma from '@prisma/client';
 import { NewChapter } from '../entities/new_chapter';
-
-const { PrismaClient } = Prisma;
+import { MangaService } from '../services';
 
 export default class BaseParser {
     constructor(homePageUrl) {
         this.homePageUrl = homePageUrl;
-        this.prisma = new PrismaClient();
+        this.mangaService = new MangaService();
     }
 
     /**
@@ -32,6 +30,7 @@ export default class BaseParser {
     /**
      * Re-implement this method for parsing and returning necessary data for comparison for a particular site
      * @param {*} htmlContent
+     * @return []
      */
     parseHTMLHomePage(htmlContent) {
         throw new Error('Re-implement this method! ಠ╭╮ಠ');
@@ -43,7 +42,7 @@ export default class BaseParser {
      */
     async analyzeHomePageData(webData) {
         const newChapters = [];
-        const manga = await this.prisma.manga.findMany({
+        const manga = await this.mangaService.findMany({
             select: {
                 id: true,
                 name: true,

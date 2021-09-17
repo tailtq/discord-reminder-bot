@@ -1,4 +1,4 @@
-import { ParserTruyenTranhTuan } from '../parsers';
+import { ParserMangaFreak, ParserTruyenTranhTuan } from '../parsers';
 import BaseService from './base';
 
 export default class MangaChapterService extends BaseService {
@@ -16,6 +16,9 @@ export default class MangaChapterService extends BaseService {
         switch (website) {
             case 'truyentranhtuan':
                 mangaParser = new ParserTruyenTranhTuan('http://truyentranhtuan.com/');
+                break;
+            case 'mangafreak':
+                mangaParser = new ParserMangaFreak('https://w12.mangafreak.net/');
                 break;
         }
         const newChapters = await mangaParser.parseHomePage();

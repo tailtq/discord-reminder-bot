@@ -13,7 +13,6 @@ export default class BaseCronJob {
     }
 
     handle() {
-        console.log('test22');
         throw new Error('Re-implement this method! ಠ╭╮ಠ');
     }
 

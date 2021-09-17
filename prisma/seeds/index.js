@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import Prisma from '@prisma/client';
 
 dotenv.config();
 
@@ -7,22 +6,21 @@ import { fakeManga, tearDownManga } from './seed_manga.js';
 import { fakeUsers, tearDownUsers } from './seed_users.js';
 import { tearDownMangaChapters } from './seed_manga_chapters.js';
 import { tearDownReminders } from './seed_reminders';
-
-const prisma = new Prisma.PrismaClient();
+import prismaClient from '../index';
 
 async function tearDownDB() {
-    await tearDownReminders(prisma);
-    await tearDownMangaChapters(prisma);
+    await tearDownReminders(prismaClient);
+    await tearDownMangaChapters(prismaClient);
 
     await Promise.all([
-        tearDownManga(prisma),
-        tearDownUsers(prisma),
+        tearDownManga(prismaClient),
+        tearDownUsers(prismaClient),
     ]);
 }
 
 tearDownDB().then(async () => {
     await Promise.all([
-        fakeManga(prisma),
-        fakeUsers(prisma),
+        fakeManga(prismaClient),
+        fakeUsers(prismaClient),
     ]);
 });
