@@ -13,6 +13,7 @@ CREATE TABLE "users" (
 CREATE TABLE "manga" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
+    "thumbnailUrl" TEXT NOT NULL,
     "otherNames" TEXT NOT NULL DEFAULT '[]',
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -22,7 +23,8 @@ CREATE TABLE "manga" (
 CREATE TABLE "manga_chapters" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "mangaId" INTEGER NOT NULL,
-    "chapterName" TEXT NOT NULL,
+    "chapterName" TEXT,
+    "chapterNumber" REAL NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "manga_chapters_mangaId_fkey" FOREIGN KEY ("mangaId") REFERENCES "manga" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -32,6 +34,8 @@ CREATE TABLE "manga_chapters" (
 CREATE TABLE "reminders" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "userId" INTEGER NOT NULL,
+    "platformMessageId" TEXT,
+    "platform" TEXT NOT NULL,
     "itemId" INTEGER NOT NULL,
     "itemType" TEXT NOT NULL,
     "message" TEXT NOT NULL,

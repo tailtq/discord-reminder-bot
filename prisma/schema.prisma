@@ -27,6 +27,7 @@ model User {
 model Manga {
   id            Int         @id @default(autoincrement())
   name          String      @unique()
+  thumbnailUrl  String
   otherNames    String      @default("[]")
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @default(now())
@@ -39,7 +40,8 @@ model Manga {
 model MangaChapter {
   id            Int         @id @default(autoincrement())
   mangaId       Int
-  chapterName   String
+  chapterName   String?
+  chapterNumber Float
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @default(now())
 
@@ -49,14 +51,16 @@ model MangaChapter {
 }
 
 model Reminder {
-  id            Int         @id @default(autoincrement())
-  userId        Int
-  itemId        Int
-  itemType      String
-  message       String
-  createdAt     DateTime    @default(now())
+  id                            Int         @id @default(autoincrement())
+  userId                        Int
+  platformMessageId             String?
+  platform                      String
+  itemId                        Int
+  itemType                      String
+  message                       String
+  createdAt                     DateTime    @default(now())
 
-  user          User        @relation(fields: [userId], references: [id])
+  user                          User        @relation(fields: [userId], references: [id])
 
   @@map("reminders")
 }

@@ -16,9 +16,10 @@ class DiscordConnector {
         }
     }
 
-    async publishMessage(userId, message) {
+    async publishMessage(userId, message, additionalData = {}) {
         const user = await this.client.users.fetch(userId);
-        await user.send(message);
+
+        return user.send({ content: message, ...additionalData });
     }
 
     listenMessages() {

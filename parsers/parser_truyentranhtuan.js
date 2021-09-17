@@ -10,27 +10,13 @@ class ParserTruyenTranhTuan extends BaseParser {
         const data = [];
 
         root.find('#story-list > .manga-focus').each((index, node) => {
-            const mangaName = $(node).find('.manga > a').text();
-            const chapter = $(node).find('.chapter > a').text().split(' ')[1];
-
-            data.push({ mangaName, chapter });
+            const mangaName = $(node).find('.manga > a').text().trim();
+            const chapterText = $(node).find('.chapter > a').text().split(' ')[1].trim();
+            const chapterNumber = parseFloat(chapterText);
+            data.push({ mangaName, chapterText, chapterNumber });
         });
 
         return data;
-    }
-
-    async analyzeHomePageData(data) {
-
-        // await this.prisma.user.create({
-        //     data: {
-        //         firstName: 'Tali',
-        //         lastName: 'Le',
-        //         platform: 'discord',
-        //         platformId: '480527832137728002'
-        //     },
-        // });
-        // console.log(result);
-        console.log(await this.prisma.user.findMany());
     }
 }
 

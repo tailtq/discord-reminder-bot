@@ -1,4 +1,6 @@
-async function fakeUsers(prisma) {
+import { PLATFORMS } from '../../constants';
+
+function fakeUsers(prisma) {
     const mangaList = [
         {
             firstName: 'Tai',
@@ -7,11 +9,17 @@ async function fakeUsers(prisma) {
             platformId: '480527832137728000',
         },
     ];
-    await Promise.all(
-        mangaList.map(data => prisma.user.create({ data }))
+    return Promise.all(
+        mangaList.map(data => prisma.user.create({data})),
     );
+}
+
+
+function tearDownUsers(prisma) {
+    return prisma.user.deleteMany({});
 }
 
 export {
     fakeUsers,
+    tearDownUsers,
 };
