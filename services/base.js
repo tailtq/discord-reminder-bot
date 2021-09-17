@@ -4,8 +4,8 @@ const { PrismaClient } = Prisma;
 
 export default class BaseService {
     constructor(model) {
-        this.client = new PrismaClient();
-        this.connection = this.client[model];
+        const prismaClient = new PrismaClient();
+        this.connection = prismaClient[model];
     }
 
     /**

@@ -1,7 +1,7 @@
 import { PLATFORMS } from '../../constants';
 
 function fakeUsers(prisma) {
-    const mangaList = [
+    const userList = [
         {
             firstName: 'Tai',
             lastName: 'Le',
@@ -10,7 +10,7 @@ function fakeUsers(prisma) {
         },
     ];
     return Promise.all(
-        mangaList.map(data => prisma.user.create({data})),
+        userList.map(data => prisma.user.create({data})),
     );
 }
 
