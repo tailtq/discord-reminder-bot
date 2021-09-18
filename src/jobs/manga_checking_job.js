@@ -9,8 +9,9 @@ export default class MangaCheckingJob extends BaseCronJob {
      * @param {DiscordConnector} platformConnector
      */
     constructor(website, platformConnector) {
-        super(platformConnector);
+        super();
         this.website = website;
+        this.platformConnector = platformConnector;
         this.mangaChapterService = new MangaChapterService();
         this.reminderService = new ReminderService();
         this.userService = new UserService();

@@ -4,7 +4,7 @@ import express from 'express';
 dotenv.config();
 
 import DiscordConnector from './src/platforms/discord.js';
-import { MangaCheckingJob } from './src/jobs';
+import { KeepAppActiveJob, MangaCheckingJob } from './src/jobs';
 import { MangaService } from './src/services';
 import { seedData } from './prisma/seeds';
 
@@ -13,6 +13,9 @@ const discordConnector = new DiscordConnector();
 const mangaJobTemplates = [
     [MangaCheckingJob, 'truyentranhtuan'],
     [MangaCheckingJob, 'mangafreak'],
+];
+const standardJobTemplates = [
+    KeepAppActiveJob,
 ];
 
 async function runConnectors() {
@@ -35,6 +38,14 @@ async function runConnectors() {
     });
 }
 
+async function runStandardJobs() {
+    standardJobTemplates.forEach(jobTemplate => {
+        const cronJob = new jobTemplate();
+        cronJob.run();
+    });
+}
+
+runStandardJobs();
 runConnectors();
 
 // ======== EXPRESS APP ========

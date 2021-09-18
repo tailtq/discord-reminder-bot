@@ -5,13 +5,8 @@ export default class BaseCronJob {
     CRON_JOB_PATTERN = '30 * * * * *';
 
     /**
-     * @param {DiscordConnector} connector
+     * Re-implement this method for running cron job
      */
-    constructor(connector) {
-        /** @type {DiscordConnector} */
-        this.platformConnector = connector;
-    }
-
     handle() {
         throw new Error('Re-implement this method! ಠ╭╮ಠ');
     }
