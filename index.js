@@ -9,6 +9,7 @@ import { MangaService } from './src/services';
 import { seedData } from './prisma/seeds';
 
 const discordConnector = new DiscordConnector();
+// define jobs along with their parameters
 const mangaJobTemplates = [
     [MangaCheckingJob, 'truyentranhtuan'],
     [MangaCheckingJob, 'mangafreak'],
@@ -18,11 +19,11 @@ async function runConnectors() {
     console.log('Check data availability and run connectors');
     // check data availability and run connectors
     const mangaService = new MangaService();
-
+    // seed data if there is no data available
     if ((await mangaService.findMany()).length === 0) {
         await seedData();
     }
-
+    // run connector
     discordConnector.init().then(async () => {
         mangaJobTemplates.forEach(([cronJobTemplate, website]) => {
             const cronJob = new cronJobTemplate(website, discordConnector);
