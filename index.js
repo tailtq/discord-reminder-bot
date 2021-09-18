@@ -11,7 +11,7 @@ import { seedData } from './prisma/seeds';
 const discordConnector = new DiscordConnector();
 // define jobs along with their parameters
 const mangaJobTemplates = [
-    // [MangaCheckingJob, 'truyentranhtuan'],
+    [MangaCheckingJob, 'truyentranhtuan'],
     // [MangaCheckingJob, 'mangafreak'], // haven't passed the form yet
     [MangaCheckingJob, 'mangapark'],
 ];
