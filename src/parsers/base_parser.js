@@ -1,11 +1,9 @@
 import axios from 'axios';
-import { NewChapter } from '../entities/new_chapter';
-import { MangaService } from '../services';
+import puppeteer from 'puppeteer';
 
 export default class BaseParser {
     constructor(homePageUrl) {
         this.homePageUrl = homePageUrl;
-        this.mangaService = new MangaService();
     }
 
     /**
@@ -13,20 +11,46 @@ export default class BaseParser {
      */
     async parseHomePage() {
         const htmlContent = await this.getHTMLHomePage();
-        const data = this.parseHTMLHomePage(htmlContent);
-        const result = await this.analyzeHomePageData(data);
 
-        return result;
+        return this.parseHTMLHomePage(htmlContent);
     }
 
     /**
      * @returns {Promise[string]} HomePage html
      */
     async getHTMLHomePage() {
-        const response = await axios.get(this.homePageUrl);
+        return this.getHTMLContentByAxios(this.homePageUrl);
+    }
 
+    /**
+     * @param {string} url
+     * @returns {Promise<any>}
+     */
+    async getHTMLContentByAxios(url) {
+        const response = await axios.get(url);
         return response.data;
     }
+
+    /**
+     * @param {string} url
+     * @returns {Promise<string>}
+     */
+    async getHTMLContentByPuppeteer(url) {
+        const browser = await puppeteer.launch({ headless: true });
+        const page = await browser.newPage();
+        await page.setExtraHTTPHeaders({
+            'Accept-Language': 'en'
+        });
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36');
+        console.time();
+        await page.goto(url);
+        console.timeEnd();
+        const content = await page.content();
+        await browser.close();
+
+        return content;
+    }
+
     /**
      * Re-implement this method for parsing and returning necessary data for comparison for a particular site
      * @param {*} htmlContent
@@ -34,40 +58,5 @@ export default class BaseParser {
      */
     parseHTMLHomePage(htmlContent) {
         throw new Error('Re-implement this method! ಠ╭╮ಠ');
-    }
-
-    /**
-     * Comparing data for a particular site
-     * @param {*} webData
-     */
-    async analyzeHomePageData(webData) {
-        const newChapters = [];
-        const manga = await this.mangaService.findMany({
-            select: {
-                id: true,
-                name: true,
-                otherNames: true,
-                chapters: {
-                    select: {
-                        chapterNumber: true,
-                    }
-                }
-            }
-        });
-        manga.forEach(({ id, name: mangaName, otherNames, chapters: allChapters }) => {
-            otherNames = JSON.parse(otherNames);
-            allChapters = allChapters.map(chapter => chapter.chapterNumber);
-
-            webData.forEach(({ mangaName: webName, chapterNumber }) => {
-                if (
-                    (webName === mangaName || otherNames.indexOf(webName) >= 0)
-                    && allChapters.indexOf(chapterNumber) === -1
-                ) {
-                    const newChapter = new NewChapter(id, chapterNumber);
-                    newChapters.push(newChapter);
-                }
-            });
-        });
-        return newChapters;
     }
 }

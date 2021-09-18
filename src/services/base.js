@@ -14,6 +14,14 @@ export default class BaseService {
     }
 
     /**
+     * @param {Object} params
+     * @returns Object
+     */
+    findUnique(params = {}) {
+        return this.connection.findUnique(params);
+    }
+
+    /**
      * @param {Object} data
      * @returns {data}
      */

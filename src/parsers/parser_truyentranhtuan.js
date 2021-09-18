@@ -1,10 +1,10 @@
 import Cheerio from 'cheerio';
 
-import BaseParser from './base_parser.js';
+import BaseParser from './base_parser';
 
 const { default: $ } = Cheerio;
 
-class ParserTruyenTranhTuan extends BaseParser {
+export default class ParserTruyenTranhTuan extends BaseParser {
     parseHTMLHomePage(htmlContent) {
         const root = $(htmlContent);
         const data = [];
@@ -19,5 +19,3 @@ class ParserTruyenTranhTuan extends BaseParser {
         return data;
     }
 }
-
-export default ParserTruyenTranhTuan;
