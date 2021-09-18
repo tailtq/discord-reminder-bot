@@ -1,8 +1,8 @@
-import MangaChapterService from './services/manga_chapter';
+import MangaChapterService from './src/services/manga_chapter';
 import DiscordConnector from './discord';
 import { MessageAttachment } from 'discord.js';
 import axios from 'axios';
-import { UserService } from './services';
+import { UserService } from './src/services';
 
 const discordConnector = new DiscordConnector();
 const userService = new UserService();

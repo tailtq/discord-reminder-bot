@@ -1,4 +1,4 @@
-import { PLATFORMS } from '../../constants';
+import { PLATFORMS } from '../../src/constants';
 
 function fakeUsers(prisma) {
     const userList = [
