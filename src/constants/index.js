@@ -26,11 +26,6 @@ const MANGA_LIST = [
             'Toukyou Revengers',
         ]),
     },
-    {
-        name: 'Martial Peakk',
-        thumbnailUrl: 'https://xcdn-000.animemark.com/images/W600/ea9/60457761c9d6ca27790079ae_200_266_34335.jpg',
-        otherNames: JSON.stringify([]),
-    },
 ];
 
 export {
