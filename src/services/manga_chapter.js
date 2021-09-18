@@ -28,7 +28,7 @@ export default class MangaChapterService extends BaseService {
                 break;
         }
         const data = await mangaParser.parseHomePage();
-        const newChapters = await this.analyzeHomePageData(data);
+        const newChapters = await this.analyzeNewChaptersData(data);
 
         return Promise.all(
             newChapters.map(chapter => super.create({
@@ -48,7 +48,7 @@ export default class MangaChapterService extends BaseService {
      * Comparing data for a particular site
      * @param {*} webData
      */
-    async analyzeHomePageData(webData) {
+    async analyzeNewChaptersData(webData) {
         const newChapters = [];
         const manga = await this.mangaService.findMany({
             select: {
@@ -65,9 +65,12 @@ export default class MangaChapterService extends BaseService {
         // compare crawled data and existing data in DB
         manga.forEach(({ id, name: mangaName, otherNames, chapters: allChapters }) => {
             otherNames = JSON.parse(otherNames);
+            otherNames = otherNames.map((e) => e.toLowerCase());
+            mangaName = mangaName.toLowerCase();
             allChapters = allChapters.map(chapter => chapter.chapterNumber);
 
             webData.forEach(({ mangaName: webName, chapterNumber }) => {
+                webName = webName.toLowerCase();
                 if (
                     (webName === mangaName || otherNames.indexOf(webName) >= 0)
                     && allChapters.indexOf(chapterNumber) === -1

@@ -26,6 +26,23 @@ const MANGA_LIST = [
             'Toukyou Revengers',
         ]),
     },
+    {
+        name: 'My Hero Academia',
+        thumbnailUrl: 'https://xcdn-000.animemark.com/images/W600/02a/6044dcd1cc60840d83bdba20_223_350_62952.jpg',
+        otherNames: JSON.stringify([]),
+    },
+    {
+        name: 'Onepunch-Man',
+        thumbnailUrl: 'https://images.mangafreak.net/manga_images/onepunch_man.jpg',
+        otherNames: JSON.stringify([]),
+    },
+    {
+        name: 'Overgeared',
+        thumbnailUrl: 'https://images.mangafreak.net/manga_images/overgeared_team_argo.jpg',
+        otherNames: JSON.stringify([
+            'Overgeared (Team Argo)',
+        ]),
+    },
 ];
 
 export {
