@@ -43,6 +43,11 @@ const MANGA_LIST = [
             'Overgeared (Team Argo)',
         ]),
     },
+    {
+        name: 'Kanojo, Okarishimasu',
+        thumbnailUrl: 'https://images.mangafreak.net/manga_images/kanojo_okarishimasu.jpg',
+        otherNames: JSON.stringify([]),
+    },
 ];
 
 export {
