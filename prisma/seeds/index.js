@@ -18,9 +18,14 @@ async function tearDownDB() {
     ]);
 }
 
-tearDownDB().then(async () => {
+async function seedData() {
     await Promise.all([
         fakeManga(prismaClient),
         fakeUsers(prismaClient),
     ]);
-});
+}
+
+export {
+    tearDownDB,
+    seedData,
+};

@@ -3,8 +3,10 @@ import express from 'express';
 
 dotenv.config();
 
-import DiscordConnector from './discord.js';
+import DiscordConnector from './src/platforms/discord.js';
 import { MangaCheckingJob } from './src/jobs';
+import { MangaService } from './src/services';
+import { seedData } from './prisma/seeds';
 
 const discordConnector = new DiscordConnector();
 const mangaJobTemplates = [
@@ -12,15 +14,27 @@ const mangaJobTemplates = [
     [MangaCheckingJob, 'mangafreak'],
 ];
 
-discordConnector.init().then(async () => {
-    mangaJobTemplates.forEach(([cronJobTemplate, website]) => {
-        const cronJob = new cronJobTemplate(website, discordConnector);
-        cronJob.run();
+async function runConnectors() {
+    console.log('Check data availability and run connectors');
+    // check data availability and run connectors
+    const mangaService = new MangaService();
+
+    if ((await mangaService.findMany()).length === 0) {
+        await seedData();
+    }
+
+    discordConnector.init().then(async () => {
+        mangaJobTemplates.forEach(([cronJobTemplate, website]) => {
+            const cronJob = new cronJobTemplate(website, discordConnector);
+            cronJob.run();
+        });
+        // after discord initialization => run cron jobs + catch error logs => send mail + write to somewhere else
+    }).catch((error) => {
+        console.error(error);
     });
-    // after discord initialization => run cron jobs + catch error logs => send mail + write to somewhere else
-}).catch((error) => {
-    console.error(error);
-});
+}
+
+runConnectors();
 
 // ======== EXPRESS APP ========
 const app = express();

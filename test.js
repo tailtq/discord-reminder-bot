@@ -1,5 +1,5 @@
 import MangaChapterService from './src/services/manga_chapter';
-import DiscordConnector from './discord';
+import DiscordConnector from './src/platforms/discord';
 import { MessageAttachment } from 'discord.js';
 import axios from 'axios';
 import { UserService } from './src/services';
