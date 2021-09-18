@@ -61,7 +61,7 @@ export default class BaseParser {
             webData.forEach(({ mangaName: webName, chapterNumber }) => {
                 if (
                     (webName === mangaName || otherNames.indexOf(webName) >= 0)
-                    // && allChapters.indexOf(chapterNumber) === -1
+                    && allChapters.indexOf(chapterNumber) === -1
                 ) {
                     const newChapter = new NewChapter(id, chapterNumber);
                     newChapters.push(newChapter);
