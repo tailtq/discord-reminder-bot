@@ -40,8 +40,7 @@ class DiscordConnector {
             .setTitle(title)
             .setURL(url)
             .setDescription(description)
-            .setThumbnail(thumbnail)
-            .setTimestamp();
+            .setThumbnail(thumbnail);
         const user = await this.client.users.fetch(userId);
 
         return user.send({ embeds: [embeddedMessage] });

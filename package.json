@@ -3,6 +3,10 @@
   "engines": {
     "node": ">=16.6.0"
   },
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node index.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js --experimental-specifier-resolution=node index.js"
+  },
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",
     "@prisma/client": "^3.0.2",
