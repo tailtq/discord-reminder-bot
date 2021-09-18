@@ -2,7 +2,7 @@ import BaseCronJob from './base';
 import { MangaChapterService, ReminderService, UserService } from '../services';
 
 export default class MangaCheckingJob extends BaseCronJob {
-    CRON_JOB_PATTERN = '* * * * *';
+    CRON_JOB_PATTERN = process.env.MANGA_CRON_PATTERN;
 
     /**
      * @param {string} website
