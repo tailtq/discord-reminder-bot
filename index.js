@@ -64,8 +64,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/logs', (req, res) => {
-    const logs = fs.readFileSync('logs/jobs.txt', { encoding: 'utf-8' });
+    let logs = '';
 
+    if (fs.existsSync('logs/jobs.txt')) {
+        logs = fs.readFileSync('logs/jobs.txt', { encoding: 'utf-8' });
+    }
     res.set('Content-Type', 'text/plain');
     res.send(logs);
 });

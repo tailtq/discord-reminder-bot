@@ -1,5 +1,6 @@
 import fs from 'fs';
 import cron from 'node-cron';
+import { getCurrentTimestamp } from '../utils/date_utils';
 
 
 export default class BaseCronJob {
@@ -20,7 +21,7 @@ export default class BaseCronJob {
             try {
                 await handle();
             } catch (e) {
-                fs.appendFileSync('logs/jobs.txt', `${e.stack}\n`);
+                fs.appendFileSync('logs/jobs.txt', `${getCurrentTimestamp()} ${e.stack}\n\n`);
             }
         }, { encoding: 'utf8' });
     }
