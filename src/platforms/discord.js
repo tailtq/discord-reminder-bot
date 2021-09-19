@@ -40,7 +40,8 @@ class DiscordConnector {
             .setTitle(title)
             .setURL(url)
             .setDescription(description)
-            .setThumbnail(thumbnail);
+            .setThumbnail(thumbnail)
+            .setFooter(`From ${process.env.APP_ENVIRONMENT.toUpperCase()}`);
         const user = await this.client.users.fetch(userId);
 
         return user.send({ embeds: [embeddedMessage] });

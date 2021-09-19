@@ -41,12 +41,12 @@ export default class BaseParser {
         await page.setExtraHTTPHeaders({
             'Accept-Language': 'en'
         });
+        console.log(`Running Puppeteer`);
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36');
-        console.time();
         await page.goto(url);
-        console.timeEnd();
         const content = await page.content();
         await browser.close();
+        console.log(`End Puppeteer`);
 
         return content;
     }

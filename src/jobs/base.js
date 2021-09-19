@@ -1,3 +1,4 @@
+import fs from 'fs';
 import cron from 'node-cron';
 
 
@@ -12,6 +13,15 @@ export default class BaseCronJob {
     }
 
     run() {
-        cron.schedule(this.CRON_JOB_PATTERN, this.handle.bind(this), {});
+        let { handle } = this;
+        handle = handle.bind(this);
+
+        cron.schedule(this.CRON_JOB_PATTERN, async function () {
+            try {
+                await handle();
+            } catch (e) {
+                fs.appendFileSync('logs/jobs.txt', `${e.stack}\n`);
+            }
+        }, { encoding: 'utf8' });
     }
 }
