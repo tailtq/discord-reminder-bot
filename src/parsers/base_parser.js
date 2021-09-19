@@ -36,7 +36,13 @@ export default class BaseParser {
      * @returns {Promise<string>}
      */
     async getHTMLContentByPuppeteer(url) {
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
         const page = await browser.newPage();
         await page.setExtraHTTPHeaders({
             'Accept-Language': 'en'
