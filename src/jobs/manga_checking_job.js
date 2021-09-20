@@ -31,7 +31,7 @@ export default class MangaCheckingJob extends BaseCronJob {
                 const { userPlatformId, chapter, ...reminderData } = reminder;
                 const message = `Chapter ${chapter.chapterNumber} has been released. Check it out.`;
                 const platformMessage = await this.platformConnector.publishEmbeddedMessage(
-                    userPlatformId, `Manga Release - ${chapter.manga.name}`, message, 'https://google.com', chapter.manga.thumbnailUrl
+                    userPlatformId, `Manga Release - ${chapter.manga.name}`, message, chapter.chapterLink, chapter.manga.thumbnailUrl
                 );
                 reminderData.platformMessageId = platformMessage.id;
                 reminderData.message = message;

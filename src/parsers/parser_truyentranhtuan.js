@@ -11,9 +11,12 @@ export default class ParserTruyenTranhTuan extends BaseParser {
 
         root.find('#story-list > .manga-focus').each((index, node) => {
             const mangaName = $(node).find('.manga > a').text().trim();
-            const chapterText = $(node).find('.chapter > a').text().split(' ')[1].trim();
+            const $linkTag = $(node).find('.chapter > a');
+            const chapterText = $linkTag.text().split(' ')[1].trim();
             const chapterNumber = parseFloat(chapterText);
-            data.push({ mangaName, chapterText, chapterNumber });
+            const chapterLink = $linkTag.attr('href');
+
+            data.push({ mangaName, chapterText, chapterNumber, chapterLink });
         });
 
         return data;
