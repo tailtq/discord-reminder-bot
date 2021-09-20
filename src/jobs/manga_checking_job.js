@@ -22,7 +22,6 @@ export default class MangaCheckingJob extends BaseCronJob {
      */
     async handle() {
         const newChapters = await this.mangaChapterService.getAndAddNewChapters(this.website);
-        console.log(newChapters);
         const users = await this.userService.findMany();
 
         if (newChapters.length > 0) {
