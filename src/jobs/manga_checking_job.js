@@ -22,6 +22,7 @@ export default class MangaCheckingJob extends BaseCronJob {
      */
     async handle() {
         const newChapters = await this.mangaChapterService.getAndAddNewChapters(this.website);
+        console.log(newChapters);
         const users = await this.userService.findMany();
 
         if (newChapters.length > 0) {
@@ -31,7 +32,7 @@ export default class MangaCheckingJob extends BaseCronJob {
                 const { userPlatformId, chapter, ...reminderData } = reminder;
                 const message = `Chapter ${chapter.chapterNumber} has been released. Check it out.`;
                 const platformMessage = await this.platformConnector.publishEmbeddedMessage(
-                    userPlatformId, `Manga Release - ${chapter.manga.name}`, message, 'https://google.com', chapter.manga.thumbnailUrl
+                    userPlatformId, `Manga Release - ${chapter.manga.name}`, message, chapter.chapterLink, chapter.manga.thumbnailUrl
                 );
                 reminderData.platformMessageId = platformMessage.id;
                 reminderData.message = message;

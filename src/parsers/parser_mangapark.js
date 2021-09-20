@@ -22,10 +22,12 @@ export default class ParserMangaPark extends BaseParser {
 
         root.find('#release-list > .item').each((index, node) => {
             const mangaName = $(node).find('a.fw-bold').text().trim();
-            const chapterText = $(node).find('a:last').text().trim().replace('c', '');
+            const $linkTag = $(node).find('a:last');
+            const chapterText = $linkTag.text().trim().replace('c', '');
             const chapterNumber = parseFloat(chapterText);
+            const chapterLink = `https://mangapark.net${$linkTag.attr('href')}`;
 
-            data.push({ mangaName, chapterText, chapterNumber });
+            data.push({ mangaName, chapterText, chapterNumber, chapterLink });
         });
 
         return data;

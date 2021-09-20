@@ -36,6 +36,7 @@ export default class MangaChapterService extends BaseService {
                     mangaId: chapter.mangaId,
                     chapterNumber: chapter.chapterNumber,
                     chapterName: chapter.chapterName,
+                    chapterLink: chapter.chapterLink,
                 },
                 include: {
                     manga: true,
@@ -69,13 +70,13 @@ export default class MangaChapterService extends BaseService {
             mangaName = mangaName.toLowerCase();
             allChapters = allChapters.map(chapter => chapter.chapterNumber);
 
-            webData.forEach(({ mangaName: webName, chapterNumber }) => {
+            webData.forEach(({ mangaName: webName, chapterNumber, chapterLink }) => {
                 webName = webName.toLowerCase();
                 if (
                     (webName === mangaName || otherNames.indexOf(webName) >= 0)
                     && allChapters.indexOf(chapterNumber) === -1
                 ) {
-                    const newChapter = new NewChapter(id, chapterNumber);
+                    const newChapter = new NewChapter(id, chapterNumber, chapterLink);
                     newChapters.push(newChapter);
                 }
             });

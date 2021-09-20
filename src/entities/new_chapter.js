@@ -1,8 +1,8 @@
 class NewChapter {
-    constructor(mangaId, chapterNumber, chapterName=null) {
+    constructor(mangaId, chapterNumber, chapterLink) {
         this.mangaId = mangaId;
         this.chapterNumber = chapterNumber;
-        this.chapterName = chapterName;
+        this.chapterLink = chapterLink;
     }
 }
 

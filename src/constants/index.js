@@ -48,6 +48,11 @@ const MANGA_LIST = [
         thumbnailUrl: 'https://images.mangafreak.net/manga_images/kanojo_okarishimasu.jpg',
         otherNames: JSON.stringify([]),
     },
+    {
+        name: 'How to Fight',
+        thumbnailUrl: 'https://xcdn-000.animemark.com/images/W600/ed6/60458203c9d6ca277900e6de_605_830_246998.png',
+        otherNames: JSON.stringify([]),
+    },
 ];
 
 export {
