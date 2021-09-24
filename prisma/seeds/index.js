@@ -7,9 +7,11 @@ import { fakeUsers, tearDownUsers } from './seed_users.js';
 import { tearDownMangaChapters } from './seed_manga_chapters.js';
 import { tearDownReminders } from './seed_reminders';
 import prismaClient from '../index';
+import { REMINDER_ITEMS } from '../../src/constants';
+import { fakeCoins, tearDownCoins } from './seed_coins';
 
-async function tearDownDB() {
-    await tearDownReminders(prismaClient);
+async function tearDownMangaData() {
+    await tearDownReminders(prismaClient, REMINDER_ITEMS.mangaChapter);
     await tearDownMangaChapters(prismaClient);
 
     await Promise.all([
@@ -18,14 +20,26 @@ async function tearDownDB() {
     ]);
 }
 
-async function seedData() {
+async function seedMangaData() {
     await Promise.all([
         fakeManga(prismaClient),
         fakeUsers(prismaClient),
     ]);
 }
 
+async function tearDownCoinData() {
+    await tearDownReminders(prismaClient, REMINDER_ITEMS.coinPrice);
+    await tearDownCoins(prismaClient);
+}
+
+async function seedCoinData() {
+    await fakeCoins(prismaClient);
+}
+
 export {
-    tearDownDB,
-    seedData,
+    tearDownMangaData,
+    seedMangaData,
+    // ----
+    tearDownCoinData,
+    seedCoinData,
 };

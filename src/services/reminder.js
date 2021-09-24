@@ -1,4 +1,3 @@
-import { ParserTruyenTranhTuan } from '../parsers';
 import BaseService from './base';
 import { REMINDER_ITEMS } from '../constants';
 

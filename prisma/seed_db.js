@@ -1,5 +1,11 @@
-import { tearDownDB, seedData } from './seeds';
+import { tearDownMangaData, seedMangaData, tearDownCoinData, seedCoinData } from './seeds';
 
-tearDownDB().then(async () => {
-    await seedData();
-});
+// (async () => {
+//     await tearDownMangaData();
+//     await seedMangaData();
+// })();
+
+(async () => {
+    await tearDownCoinData();
+    await seedCoinData();
+})();

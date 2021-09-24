@@ -1,9 +1,14 @@
 /**
  * @param {PrismaClient} prisma
+ * @param {string} itemType
  * @returns {*}
  */
-function tearDownReminders(prisma) {
-    return prisma.reminder.deleteMany({});
+function tearDownReminders(prisma, itemType) {
+    return prisma.reminder.deleteMany({
+        where: {
+            itemType,
+        },
+    });
 }
 
 export {
