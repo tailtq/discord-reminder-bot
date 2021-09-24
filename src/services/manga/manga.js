@@ -1,5 +1,5 @@
-import BaseService from './base';
-import { MANGA_LIST } from '../constants';
+import BaseService from '../base';
+import { MANGA_LIST } from '../../constants';
 
 export default class MangaService extends BaseService {
     constructor() {

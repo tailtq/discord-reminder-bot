@@ -1,7 +1,7 @@
-import { ParserMangaFreak, ParserMangaPark, ParserTruyenTranhTuan } from '../parsers';
-import BaseService from './base';
-import { NewChapter } from '../entities/new_chapter';
-import { MangaService } from './index';
+import { ParserMangaFreak, ParserMangaPark, ParserTruyenTranhTuan } from '../../parsers';
+import BaseService from '../base';
+import { NewChapter } from '../../entities/new_chapter';
+import { MangaService } from '../index';
 
 export default class MangaChapterService extends BaseService {
     constructor() {
