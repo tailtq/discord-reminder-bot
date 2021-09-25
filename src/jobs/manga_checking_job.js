@@ -1,4 +1,5 @@
 import BaseCronJob from './base';
+import { MANGA_MESSAGES } from '../constants/messages';
 import { MangaChapterService, ReminderService, UserService } from '../services';
 
 export default class MangaCheckingJob extends BaseCronJob {
@@ -29,9 +30,12 @@ export default class MangaCheckingJob extends BaseCronJob {
             const reminders = this.reminderService.formReminderData(newChapters, users);
             const requests = reminders.map(async (reminder) => {
                 const { userPlatformId, chapter, ...reminderData } = reminder;
-                const message = `Chapter ${chapter.chapterNumber} has been released. Check it out.`;
+                const message = MANGA_MESSAGES.chapterRelease.replace('{chapterNumber}', chapter.chapterNumber);
                 const platformMessage = await this.platformConnector.publishEmbeddedMessage(
-                    userPlatformId, `Manga Release - ${chapter.manga.name}`, message, chapter.chapterLink, chapter.manga.thumbnailUrl
+                    userPlatformId,
+                    `Manga Release - ${chapter.manga.name}`,
+                    message,
+                    chapter.chapterLink, chapter.manga.thumbnailUrl
                 );
                 reminderData.platformMessageId = platformMessage.id;
                 reminderData.message = message;

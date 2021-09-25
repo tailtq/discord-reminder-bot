@@ -68,8 +68,8 @@ model Reminder {
 
 model Coin {
   id         Int      @id @default(autoincrement())
-  name       String
-  symbol     String
+  name       String   @unique
+  symbol     String   @unique
   icon       String
   binanceUrl String
   createdAt  DateTime @default(now())

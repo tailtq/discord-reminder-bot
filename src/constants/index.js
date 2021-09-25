@@ -5,7 +5,7 @@ const PLATFORMS = {
 const REMINDER_ITEMS = {
     mangaChapter: 'manga',
     anime: 'anime',
-    coinPrice: 'coinPrice',
+    coinPrices: 'coinPrices',
 };
 
 const MANGA_LIST = [
@@ -86,6 +86,12 @@ const COIN_LIST = [
         symbol: 'SHIB',
         icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/74.png',
         binanceUrl: 'https://www.binance.com/en/trade/SHIB_USDT',
+    },
+    {
+        name: 'Axie Infinity',
+        symbol: 'AXS',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6783.png',
+        binanceUrl: 'https://www.binance.com/en/trade/AXS_USDT',
     },
 ];
 
