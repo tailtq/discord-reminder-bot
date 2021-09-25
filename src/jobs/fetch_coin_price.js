@@ -54,8 +54,7 @@ export default class FetchCoinPriceJob extends BaseCronJob {
          - DOGE     --- $0.2099
          - SHIB     --- $0.000007307
          */
-        let message = `**---\nToday at ${currentTime}**`;
-        message += '\n' + priceUpdates.map(({ coin, conversions }) => {
+        const message = '\n' + priceUpdates.map(({ coin, conversions }) => {
             const { price } = conversions[0];
             let priceString;
 
@@ -65,11 +64,19 @@ export default class FetchCoinPriceJob extends BaseCronJob {
                 const zeroDecimals = -Math.floor(Math.log10(price) + 1);
                 priceString = (price).toFixed(zeroDecimals + 4);
             }
-            return `- **${coin.symbol.padEnd(8, ' ')} ---** $${priceString}`;
+            const padSpace = coin.symbol.padEnd(20, '-').replace(coin.symbol, '');
+
+            return `- **[${coin.symbol}](${coin.binanceUrl}) ${padSpace}** $${priceString}`;
         }).join('\n');
 
-        const notifications = await Promise.all(
-            users.map((user) => this.platformConnector.publishMessage(user.platformId, message))
+        const messages = await Promise.all(
+            users.map((user) => this.platformConnector.publishEmbeddedMessage(
+                user.platformId,
+                `Cryptocurrency Price at ${currentTime}`,
+                message,
+                null,
+                null,
+            )),
         );
         // create one reminder to one user (itemId = 0)
         await Promise.all(
@@ -79,7 +86,7 @@ export default class FetchCoinPriceJob extends BaseCronJob {
                     itemId: 0,
                     itemType: REMINDER_ITEMS.coinPrices,
                     platform: user.platform,
-                    platformMessageId: notifications[index].id,
+                    platformMessageId: messages[index].id,
                     message: message,
                 },
             })),
