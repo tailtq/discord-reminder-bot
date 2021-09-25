@@ -5,7 +5,7 @@ dotenv.config();
 import DiscordConnector from './src/platforms/discord.js';
 import { FetchCoinPriceJob, KeepAppActiveJob, MangaCheckingJob } from './src/jobs';
 import { CoinService, MangaService } from './src/services';
-import { seedMangaData, seedCoinData } from './prisma/seeds';
+import { seedMangaData } from './prisma/seeds';
 
 const discordConnector = new DiscordConnector();
 // define jobs along with their parameters

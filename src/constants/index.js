@@ -95,9 +95,12 @@ const COIN_LIST = [
     },
 ];
 
+const COIN_REMINDING_TIME = (process.env.COIN_REMINDING_TIME || '').split(',');
+
 export {
     PLATFORMS,
     REMINDER_ITEMS,
     MANGA_LIST,
     COIN_LIST,
+    COIN_REMINDING_TIME,
 };

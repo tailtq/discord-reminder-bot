@@ -2,7 +2,7 @@ import moment from 'moment';
 import 'moment-timezone';
 
 import BaseCronJob from './base';
-import { REMINDER_ITEMS } from '../constants';
+import { COIN_REMINDING_TIME, REMINDER_ITEMS } from '../constants';
 import { CoinMarketCapService, CoinService, PriceUpdateService, ReminderService, UserService } from '../services';
 
 export default class FetchCoinPriceJob extends BaseCronJob {
@@ -36,8 +36,9 @@ export default class FetchCoinPriceJob extends BaseCronJob {
         const priceUpdates = await Promise.all(promises);
         // send notification to discord
         const currentTime = moment().tz('Asia/Ho_Chi_Minh').format('HH:mm');
+        console.log('FetchCoinPriceJob', currentTime);
 
-        if (['07:30', '13:00', '18:00', '22:00'].indexOf(currentTime) >= 0) {
+        if (COIN_REMINDING_TIME.indexOf(currentTime) >= 0) {
             await this.sendMessages(priceUpdates);
         }
     }
