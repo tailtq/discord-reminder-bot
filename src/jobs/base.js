@@ -4,6 +4,10 @@ import { getCurrentTimestamp } from '../utils/date_utils';
 
 
 export default class BaseCronJob {
+    /** @property {DiscordConnector} platformConnector */
+    platformConnector;
+
+    /** @property {string} CRON_JOB_PATTERN */
     CRON_JOB_PATTERN = '30 * * * * *';
 
     /**

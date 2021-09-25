@@ -5,6 +5,7 @@ const PLATFORMS = {
 const REMINDER_ITEMS = {
     mangaChapter: 'manga',
     anime: 'anime',
+    coinPrices: 'coinPrices',
 };
 
 const MANGA_LIST = [
@@ -55,8 +56,48 @@ const MANGA_LIST = [
     },
 ];
 
+const COIN_LIST = [
+    {
+        name: 'Bitcoin',
+        symbol: 'BTC',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png',
+        binanceUrl: 'https://www.binance.com/en/trade/BTC_USDT',
+    },
+    {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+        binanceUrl: 'https://www.binance.com/en/trade/ETH_USDT',
+    },
+    {
+        name: 'Cardano',
+        symbol: 'ADA',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png',
+        binanceUrl: 'https://www.binance.com/en/trade/ADA_USDT',
+    },
+    {
+        name: 'Dogecoin',
+        symbol: 'DOGE',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/74.png',
+        binanceUrl: 'https://www.binance.com/en/trade/DOGE_USDT',
+    },
+    {
+        name: 'SHIBA INU',
+        symbol: 'SHIB',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/74.png',
+        binanceUrl: 'https://www.binance.com/en/trade/SHIB_USDT',
+    },
+    {
+        name: 'Axie Infinity',
+        symbol: 'AXS',
+        icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/6783.png',
+        binanceUrl: 'https://www.binance.com/en/trade/AXS_USDT',
+    },
+];
+
 export {
     PLATFORMS,
     REMINDER_ITEMS,
     MANGA_LIST,
+    COIN_LIST,
 };

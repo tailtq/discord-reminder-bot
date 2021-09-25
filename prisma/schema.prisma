@@ -11,13 +11,13 @@ generator client {
 }
 
 model User {
-  id            Int         @id @default(autoincrement())
-  firstName     String
-  lastName      String
-  platform      String      @default("discord")
-  platformId    String      @unique()
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now())
+  id         Int      @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  platform   String   @default("discord")
+  platformId String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 
   reminders Reminder[]
 
@@ -25,43 +25,83 @@ model User {
 }
 
 model Manga {
-  id            Int         @id @default(autoincrement())
-  name          String      @unique()
-  thumbnailUrl  String
-  otherNames    String      @default("[]")
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  thumbnailUrl String
+  otherNames   String   @default("[]")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 
-  chapters      MangaChapter[]
+  chapters MangaChapter[]
 
   @@map("manga")
 }
 
 model MangaChapter {
-  id            Int         @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   mangaId       Int
   chapterName   String?
   chapterNumber Float
   chapterLink   String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
 
-  manga         Manga        @relation(fields: [mangaId], references: [id])
+  manga Manga @relation(fields: [mangaId], references: [id])
 
   @@map("manga_chapters")
 }
 
 model Reminder {
-  id                            Int         @id @default(autoincrement())
-  userId                        Int
-  platformMessageId             String?
-  platform                      String
-  itemId                        Int
-  itemType                      String
-  message                       String
-  createdAt                     DateTime    @default(now())
+  id                Int      @id @default(autoincrement())
+  userId            Int
+  platformMessageId String?
+  platform          String
+  itemId            Int
+  itemType          String
+  message           String
+  createdAt         DateTime @default(now())
 
-  user                          User        @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
   @@map("reminders")
+}
+
+model Coin {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  symbol     String   @unique
+  icon       String
+  binanceUrl String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  priceUpdates PriceUpdate[]
+
+  @@map("coins")
+}
+
+model PriceUpdate {
+  id          Int      @id @default(autoincrement())
+  coinId      Int
+  updatedTime DateTime
+  createdAt   DateTime @default(now())
+
+  coin        Coin                    @relation(fields: [coinId], references: [id])
+  conversions PriceUpdateConversion[]
+
+  @@map("price_updates")
+}
+
+model PriceUpdateConversion {
+  id            Int      @id @default(autoincrement())
+  priceUpdateId Int
+  convertTo     String
+  price         Float
+  volume24h     Float
+  percentChange String
+  createdAt     DateTime @default(now())
+
+  priceUpdate PriceUpdate @relation(fields: [priceUpdateId], references: [id])
+
+  @@map("price_update_conversions")
 }
