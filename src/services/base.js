@@ -17,8 +17,24 @@ export default class BaseService {
      * @param {Object} params
      * @returns Object
      */
-    findUnique(params = {}) {
+    findUnique(params) {
         return this.connection.findUnique(params);
+    }
+
+    /**
+     * @param {Object} params
+     * @returns {*}
+     */
+    findFirst(params) {
+        return this.connection.findFirst(params);
+    }
+
+    /**
+     * @param {Object} params
+     * @returns {*}
+     */
+    groupBy(params) {
+        return this.connection.groupBy(params);
     }
 
     /**

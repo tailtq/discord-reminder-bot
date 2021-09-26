@@ -39,7 +39,7 @@ export default class CoinMarketCapService {
         return priceUpdates.map((element) => ({
             data: {
                 coinId: element.coinId,
-                updatedTime: new Date(element.date_added),
+                updatedTime: new Date(element.last_updated),
                 conversions: {
                     create: [
                         {

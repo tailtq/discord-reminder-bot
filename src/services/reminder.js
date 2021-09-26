@@ -11,7 +11,7 @@ export default class ReminderService extends BaseService {
      * @param {Array} users
      * @returns {*[]}
      */
-    formReminderData(newChapters, users) {
+    changeChapterDataStructure(newChapters, users) {
         const reminders = [];
 
         newChapters.forEach((chapter) => {

@@ -39,6 +39,7 @@ async function runConnectors() {
     // run connector
     console.log('Run connector...');
     await discordConnector.init();
+    discordConnector.listenMessages();
 
     mangaJobTemplates.forEach(([cronJobTemplate, website]) => {
         const cronJob = new cronJobTemplate(website, discordConnector);

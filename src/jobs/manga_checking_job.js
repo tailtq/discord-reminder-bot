@@ -27,7 +27,7 @@ export default class MangaCheckingJob extends BaseCronJob {
 
         if (newChapters.length > 0) {
             // get chapters with manga -> show relevant message
-            const reminders = this.reminderService.formReminderData(newChapters, users);
+            const reminders = this.reminderService.changeChapterDataStructure(newChapters, users);
             const requests = reminders.map(async (reminder) => {
                 const { userPlatformId, chapter, ...reminderData } = reminder;
                 const message = MANGA_MESSAGES.chapterRelease.replace('{chapterNumber}', chapter.chapterNumber);
