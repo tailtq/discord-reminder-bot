@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import axios from 'axios';
-import FetchCoinPriceJob from './src/jobs/fetch_coin_price';
+import FetchCoinPriceJob from './src/jobs/cryptocurrency/fetch_coin_price';
 import DiscordConnector from './src/platforms/discord';
 
 const test = (async () => {

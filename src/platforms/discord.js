@@ -1,4 +1,5 @@
 import { Client, Intents, MessageEmbed } from 'discord.js';
+import GetLatestPriceJob from '../jobs/cryptocurrency/get_latest_price';
 
 const intents = [
     Intents.FLAGS.DIRECT_MESSAGES,
@@ -48,9 +49,20 @@ class DiscordConnector {
     }
 
     listenMessages() {
-        this.client.on('messageCreate', (message) => {
+        this.client.on('messageCreate', async (message) => {
             if (message.author.bot) return;
-            console.log(message);
+
+            switch (message.content) {
+                case 'coin latest-price':
+                    const job = new GetLatestPriceJob(this);
+                    await job.handle(message.author.id);
+                    return;
+                case 'help':
+                    await this.publishMessage(message.author.id, `
+                        - **coin latest-price:** Check latest price of interesting coins                                            
+                    `);
+                    return;
+            }
         });
     }
 }
