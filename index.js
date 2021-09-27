@@ -45,10 +45,10 @@ async function runConnectors() {
         const cronJob = new cronJobTemplate(website, discordConnector);
         cronJob.run();
     });
-    coinJobTemplates.forEach((cronJobTemplate) => {
-        const cronJob = new cronJobTemplate(discordConnector);
-        cronJob.run();
-    });
+//     coinJobTemplates.forEach((cronJobTemplate) => {
+//         const cronJob = new cronJobTemplate(discordConnector);
+//         cronJob.run();
+//     });
 }
 
 async function runStandardJobs() {
