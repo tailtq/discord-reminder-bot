@@ -4,15 +4,21 @@ dotenv.config();
 
 import DiscordConnector from './src/platforms/discord.js';
 import { FetchCoinPriceJob, KeepAppActiveJob, MangaCheckingJob } from './src/jobs';
-import { CoinService, MangaService } from './src/services';
+import {
+    CoinService,
+    MangaService,
+    PriceUpdateConversionService,
+    PriceUpdateService,
+    UserService,
+} from './src/services';
 import { seedMangaData } from './prisma/seeds';
 
 const discordConnector = new DiscordConnector();
 // define jobs along with their parameters
 const mangaJobTemplates = [
     [MangaCheckingJob, 'truyentranhtuan'],
-    // [MangaCheckingJob, 'mangafreak'], // haven't passed the form yet
     [MangaCheckingJob, 'mangapark'],
+    // [MangaCheckingJob, 'mangafreak'], // haven't passed the form yet
 ];
 const coinJobTemplates = [
     FetchCoinPriceJob,
@@ -26,16 +32,15 @@ async function runConnectors() {
     // check data availability and run connectors
     const mangaService = new MangaService();
     const coinService = new CoinService();
-    // seed data if there is no data available
-    if ((await mangaService.findMany()).length === 0) {
-        await seedMangaData();
-    }
-    console.log('Sync manga list...');
+    const priceUpdateService = new PriceUpdateService();
     // sync manga list
+    console.log('Sync manga & coin list...');
     await Promise.all([
         mangaService.syncMangaList(),
         coinService.syncCoinList(),
     ]);
+    // clear all data
+    await priceUpdateService.clearAllPriceUpdates();
     // run connector
     console.log('Run connector...');
     await discordConnector.init();

@@ -5,6 +5,10 @@ export default class PriceUpdateService extends BaseService {
         super('priceUpdate');
     }
 
+    /**
+     * @param priceUpdates
+     * @returns {string}
+     */
     createPriceUpdateMessage(priceUpdates) {
         return '\n' + priceUpdates.map(({ coin, conversions }) => {
             const { price } = conversions[0];
@@ -20,5 +24,12 @@ export default class PriceUpdateService extends BaseService {
 
             return `- **[${coin.symbol}](${coin.binanceUrl}) ${padSpace}** $${priceString}`;
         }).join('\n');
+    }
+
+    async clearAllPriceUpdates() {
+        const PriceUpdateConversionService = (await import('./price_update_conversion')).default;
+        const priceUpdateConversionService = new PriceUpdateConversionService();
+        await priceUpdateConversionService.deleteMany();
+        await this.deleteMany();
     }
 }

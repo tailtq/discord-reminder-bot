@@ -1,6 +1,11 @@
 import prismaClient from '../../prisma';
 
 export default class BaseService {
+    /**
+     * @param {Object} connection
+     */
+    connection;
+
     constructor(model) {
         this.connection = prismaClient[model];
     }
@@ -51,5 +56,14 @@ export default class BaseService {
      */
     createMany(data) {
         return this.connection.createMany({ data });
+    }
+
+    /**
+     * @param {Object} conditions
+     */
+    deleteMany(conditions = {}) {
+        return this.connection.deleteMany({
+            where: conditions,
+        });
     }
 }

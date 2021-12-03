@@ -22,6 +22,9 @@ export default class MangaCheckingJob extends BaseCronJob {
      * @returns {Promise<void>}
      */
     async handle() {
+        // function is already stable -> shouldn't run anymore (can change the Discord app, but it is not needed)
+        if (process.env.APP_ENVIRONMENT === 'local') return;
+
         const newChapters = await this.mangaChapterService.getAndAddNewChapters(this.website);
         const users = await this.userService.findMany();
 
