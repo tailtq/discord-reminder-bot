@@ -1,5 +1,5 @@
 import { ParserMangaFreak, ParserMangaPark, ParserTruyenTranhTuan } from '../../parsers';
-import BaseService from '../base';
+import BaseService from '../../core/base_service';
 import { NewChapter } from '../../entities/new_chapter';
 import { MangaService } from '../index';
 

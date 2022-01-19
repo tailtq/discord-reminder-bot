@@ -1,11 +1,13 @@
-import MangaCheckingJob from './manga_checking_job';
+import CheckMangaJob from './check_manga';
 import KeepAppActiveJob from './keep_app_active';
+import ManageTodoListJob from './manage_todo_list';
 import FetchCoinPriceJob from './cryptocurrency/fetch_coin_price';
 import GetLatestPriceJob from './cryptocurrency/get_latest_price';
 
 export {
-    MangaCheckingJob,
+    CheckMangaJob,
     KeepAppActiveJob,
+    ManageTodoListJob,
     FetchCoinPriceJob,
     GetLatestPriceJob,
 };

@@ -1,4 +1,4 @@
-import BaseService from './base';
+import BaseService from '../core/base_service';
 import { REMINDER_ITEMS } from '../constants';
 
 export default class ReminderService extends BaseService {

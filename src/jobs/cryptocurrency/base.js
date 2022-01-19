@@ -1,9 +1,12 @@
 import moment from 'moment';
 
-import BaseCronJob from '../base';
+import BaseCronJob from '../../core/base_cron_job';
 import { REMINDER_ITEMS } from '../../constants';
 import { PriceUpdateService, ReminderService, UserService } from '../../services';
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 export default class SendCoinPriceMessageJob extends BaseCronJob {
     CRON_JOB_PATTERN = process.env.FETCH_COIN_PRICE_CRON_PATTERN;
 
@@ -38,7 +41,7 @@ export default class SendCoinPriceMessageJob extends BaseCronJob {
         const messages = await Promise.all(
             users.map((user) => this.platformConnector.publishEmbeddedMessage(
                 user.platformId,
-                `Cryptocurrency Price at ${this.getVietnameseTime(moment(priceUpdates[0].updatedTime))}`,
+                `Cryptocurrency Price at ${this.getVietnameseTime(moment(priceUpdates[0].updatedTime).format('HH:mm'))}`,
                 message,
                 null,
                 null,
@@ -57,17 +60,5 @@ export default class SendCoinPriceMessageJob extends BaseCronJob {
                 },
             })),
         );
-    }
-
-    /**
-     * @param {string|null} currentTime
-     * @returns {string}
-     */
-    getVietnameseTime(currentTime = null) {
-        currentTime = (currentTime ? moment(currentTime) : moment())
-            .tz('Asia/Ho_Chi_Minh')
-            .format('HH:mm');
-
-        return currentTime;
     }
 }

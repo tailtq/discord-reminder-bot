@@ -1,8 +1,8 @@
-import BaseCronJob from './base';
+import BaseCronJob from '../core/base_cron_job';
 import { MANGA_MESSAGES } from '../constants/messages';
 import { MangaChapterService, ReminderService, UserService } from '../services';
 
-export default class MangaCheckingJob extends BaseCronJob {
+export default class CheckMangaJob extends BaseCronJob {
     CRON_JOB_PATTERN = process.env.MANGA_CRON_PATTERN;
 
     /**

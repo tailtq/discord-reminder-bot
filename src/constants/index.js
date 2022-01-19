@@ -6,6 +6,7 @@ const REMINDER_ITEMS = {
     mangaChapter: 'manga',
     anime: 'anime',
     coinPrices: 'coinPrices',
+    todoListReminder: 'todoListReminder',
 };
 
 const MANGA_LIST = [
@@ -56,6 +57,9 @@ const MANGA_LIST = [
     },
 ];
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 const COIN_LIST = [
     {
         name: 'Bitcoin',
@@ -95,7 +99,12 @@ const COIN_LIST = [
     },
 ];
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 const COIN_REMINDING_TIME = (process.env.COIN_REMINDING_TIME || '').split(',');
+
+const TODO_LIST_REMINDING_TIME = (process.env.TODO_LIST_REMINDING_TIME || '').split(',');
 
 export {
     PLATFORMS,
@@ -103,4 +112,5 @@ export {
     MANGA_LIST,
     COIN_LIST,
     COIN_REMINDING_TIME,
+    TODO_LIST_REMINDING_TIME,
 };

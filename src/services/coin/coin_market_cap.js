@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 export default class CoinMarketCapService {
     constructor() {
         this.host = 'https://pro-api.coinmarketcap.com/v1';
