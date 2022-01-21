@@ -1,5 +1,8 @@
-import BaseService from '../base';
+import BaseService from '../../core/base_service';
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 export default class PriceUpdateService extends BaseService {
     constructor() {
         super('priceUpdate');

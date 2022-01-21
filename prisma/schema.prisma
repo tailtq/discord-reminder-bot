@@ -66,6 +66,8 @@ model Reminder {
   @@map("reminders")
 }
 
+// Cryptocurrency is outdated and not used anymore
+
 model Coin {
   id         Int      @id @default(autoincrement())
   name       String   @unique

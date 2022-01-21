@@ -1,6 +1,9 @@
 import { CoinMarketCapService, UserService } from '../../services';
 import SendCoinPriceMessageJob from './base';
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 export default class GetLatestPriceJob extends SendCoinPriceMessageJob {
     CRON_JOB_PATTERN = process.env.FETCH_COIN_PRICE_CRON_PATTERN;
 

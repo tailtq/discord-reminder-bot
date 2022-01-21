@@ -1,6 +1,6 @@
 import Cheerio from 'cheerio';
 
-import BaseParser from './base_parser';
+import BaseParser from '../core/base_parser';
 
 const { default: $ } = Cheerio;
 

@@ -1,65 +1,70 @@
-/* Example in Node.js ES6 using request-promise */
-import dotenv from 'dotenv';
-import axios from 'axios';
-import querystring from 'querystring';
-import crypto from 'crypto';
+import { Client } from '@notionhq/client';
+import moment from 'moment';
 
-dotenv.config();
+const notion = new Client({
+    auth: '',
+    notionVersion: '2021-08-16'
+});
 
-import GateApi from 'gate-api';
-const client = new GateApi.ApiClient();
-// client.basePath = "https://some-other-host"
+const todoListPageId = '00f5a432810f44c989ee78ac7aa4c3b6';
+/**
+  {
+    "object": "block",
+    "id": "c4598744-9dc5-436a-a9c6-cb59725da153",
+    "created_time": "2022-01-16T19:12:00.000Z",
+    "last_edited_time": "2022-01-16T19:12:00.000Z",
+    "has_children": true,
+    "archived": false,
+    "type": "to_do",
+    "to_do": {
+      "text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "Check the bot idea",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "Check the bot idea",
+          "href": null
+        }
+      ],
+      "checked": false
+    }
+  }
+ */
 
-const api = new GateApi.SpotApi(client);
-let opts = {
-    'currency': 'raca' // string | Retrieve data of the specified currency
-};
-api.listSpotAccounts(opts)
-    .then(value => console.log('API called successfully. Returned data: ', value.body),
-        error => console.error(error))
-
-opts = {
-    'page': 1, // number | Page number
-    'limit': 100,
-};
-api.listAllOpenOrders(opts)
-    .then(value => console.log('API called successfully. Returned data: ', JSON.stringify(value.body, null, 4)),
-        error => console.error(error))
-
-// const url = 'https://api.gateio.ws/api/v4/spot/accounts';
-// const params = {};
-// // let bodyParam = {'contract': 'BTC_USD', 'size': 100, 'price': '30', 'tif': 'gtc'};
-// let bodyParam = {};
-// const method = 'GET';
-// const auth = {
-//     apiKey: '',
-//     secretKey: '',
-// };
-// const commonHeaders = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-//
-// const timestamp = (new Date().getTime() / 1000).toString();
-// const resourcePath = new URL(url).pathname;
-// const queryString = unescape(querystring.stringify(params));
-// if (bodyParam && typeof bodyParam !== 'string') {
-//     bodyParam = JSON.stringify(bodyParam);
-// }
-// const hashedPayload = crypto.createHash('sha512').update(bodyParam).digest('hex');
-// const signatureString = [method, resourcePath, queryString, hashedPayload, timestamp].join('\n');
-// const signature = crypto.createHmac('sha512', auth.secretKey).update(signatureString).digest('hex');
-//
-// const headers = {
-//     'KEY': auth.apiKey,
-//     'Timestamp': timestamp,
-//     'SIGN': signature,
-//     ...commonHeaders,
-// }
-// axios.request({
-//     url,
-//     method,
-//     headers,
-//     body: bodyParam,
-// }).then((res) => {
-//     console.log(Object.keys(res.data));
-// }).catch((err) => {
-//     console.log(err.response.data);
-// });
+(async () => {
+  const now = moment();
+  const nowText = now.format('DD/MM/YYYY');
+  const pageBlocks = (await notion.blocks.children.list({ block_id: todoListPageId })).results;
+  const todoListFromIndex = pageBlocks.findIndex((block) => {
+    return block.heading_2?.text?.[0].plain_text === nowText;
+  });
+  if (todoListFromIndex === -1) {
+    // TODO: Remind create todo list
+    return;
+  }
+  let todoListToIndex;
+  for (let i = todoListFromIndex + 1; i < pageBlocks.length; i += 1) {
+    if (pageBlocks[i].type !== 'to_do') {
+      todoListToIndex = i;
+      break;
+    }
+  }
+  todoListToIndex = todoListToIndex || pageBlocks.length;
+  const todoListBlocks = pageBlocks.slice(todoListFromIndex + 1, todoListToIndex);
+  const todoListText = todoListBlocks.map(block => {
+    const doneEmoji = block.to_do?.checked ? ':white_check_mark:' : ':black_large_square:';
+    return `${doneEmoji} ${block.to_do?.text?.[0].plain_text}`;
+  });
+  // TODO: Remind at 8:00, 12:00, 18:00, 23:00
+  // console.log(todoListToIndex);
+})()

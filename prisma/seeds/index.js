@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import { fakeManga, tearDownManga } from './seed_manga.js';
-import { fakeUsers, tearDownUsers } from './seed_users.js';
-import { tearDownMangaChapters } from './seed_manga_chapters.js';
+import { fakeManga, tearDownManga } from './seed_manga';
+import { fakeUsers, tearDownUsers } from './seed_users';
+import { tearDownMangaChapters } from './seed_manga_chapters';
 import { tearDownReminders } from './seed_reminders';
 import prismaClient from '../index';
 import { REMINDER_ITEMS } from '../../src/constants';

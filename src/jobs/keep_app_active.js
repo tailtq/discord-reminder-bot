@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BaseCronJob from './base';
+import BaseCronJob from '../core/base_cron_job';
 
 export default class KeepAppActiveJob extends BaseCronJob {
     CRON_JOB_PATTERN = process.env.KEEP_APP_ALIVE_PATTERN;

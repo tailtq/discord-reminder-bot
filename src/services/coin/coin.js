@@ -1,6 +1,9 @@
-import BaseService from '../base';
+import BaseService from '../../core/base_service';
 import { COIN_LIST } from '../../constants';
 
+/**
+ * @deprecated This won't be maintained anymore
+ */
 export default class CoinService extends BaseService {
     constructor() {
         super('coin');
