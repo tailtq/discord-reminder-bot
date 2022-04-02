@@ -43,7 +43,9 @@ export default class ManageTodoListJob extends BaseCronJob {
     });
     if (todoListFromIndex === -1) {
       // send reminder to create todo list hourly
-      await this.publishMessageAndCreateReminder(reminderData, NOTION_MESSAGES.todoListNotCreated, user);
+      if (timeNowText >= '07:00' && timeNowText <= '12:00') {
+        await this.publishMessageAndCreateReminder(reminderData, NOTION_MESSAGES.todoListNotCreated, user);
+      }
       return;
     } else if (TODO_LIST_REMINDING_TIME.indexOf(timeNowText) === -1) {
       return;
